@@ -225,6 +225,23 @@ pub fn build(b: *std.Build) !void {
 
     const test_step = b.step("test", "Run unit tests");
     test_step.dependOn(&exe_tests.step);
+
+    // Audio decoder tests (WAV/OGG). Decoder only, no audio device. Runs from the project root
+    // so the fixtures under assets/test are found.
+    const audio_test_module = b.createModule(.{
+        .root_source_file = b.path("src/tests/audio_decode.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
+    audio_test_module.addImport("zaudio", dep_zaudio.module("root"));
+    audio_test_module.linkLibrary(dep_zaudio.artifact("miniaudio"));
+    const audio_tests = b.addTest(.{
+        .name = "audio-decode-tests",
+        .root_module = audio_test_module,
+    });
+    const run_audio_tests = b.addRunArtifact(audio_tests);
+    run_audio_tests.setCwd(b.path("."));
+    test_step.dependOn(&run_audio_tests.step);
 }
 
 fn buildExample(b: *std.Build, example: []const u8, delve_module: *Build.Module, delve_lib: *Build.Step.Compile) !void {

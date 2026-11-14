@@ -28,8 +28,7 @@
             .hash = "zmesh-0.11.0-dev-oO3A5nqTCgDp-F-INyuScGOVTyVZqWg8XPgudQpKbE4o",
         },
         .zaudio = .{
-            .url = "git+https://github.com/zig-gamedev/zaudio.git#8d0d7ebffe9008019134b3d202eabc5476aca3a4",
-            .hash = "zaudio-0.11.0-dev-_M-91owyQQD3MVQa4F1xkPgwSFWQi4HhhNfDwKI0PBWX",
+            .path = "3rdparty/zaudio",
         },
         .cimgui = .{
             .url = "git+https://github.com/floooh/dcimgui.git#e2f0e0d93adec02743c55940be23ffe286e857f7",
